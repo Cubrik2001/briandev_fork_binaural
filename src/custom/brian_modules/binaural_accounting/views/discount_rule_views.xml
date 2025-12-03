@@ -1,0 +1,54 @@
+<odoo>
+    <!-- VISTA FORMULARIO para Reglas de Descuento -->
+    <record id="binaural_discount_rule_view_form" model="ir.ui.view">
+        <field name="name">binaural.discount.rule.view.form</field>
+        <field name="model">binaural.discount.rule</field>
+        <field name="arch" type="xml">
+            <form string="Regla de Descuento">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="customer_type"/>
+                        <field name="discount_percentage" widget="percentage" options="{'readonly_percentage': True}"/>
+                        <field name="sequence" groups="base.group_no_one"/>
+                    </group>
+                    <footer>
+                        <p class="text-muted">
+                            Solo se permite una regla por Tipo de Cliente. El descuento se aplica automáticamente
+                            al validar facturas de clientes (Out Invoice) que no estén en borrador.
+                        </p>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- VISTA TREE/LISTA para Reglas de Descuento -->
+    <record id="binaural_discount_rule_view_tree" model="ir.ui.view">
+        <field name="name">binaural.discount.rule.view.tree</field>
+        <field name="model">binaural.discount.rule</field>
+        <field name="arch" type="xml">
+            <tree string="Reglas de Descuento" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="customer_type"/>
+                <field name="discount_percentage" widget="percentage" options="{'readonly_percentage': True}"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ACCIÓN DE VENTANA para Reglas de Descuento -->
+    <record id="binaural_discount_rule_action" model="ir.actions.act_window">
+        <field name="name">Reglas de Descuento</field>
+        <field name="res_model">binaural.discount.rule</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crea la primera regla de descuento para tus clientes.
+            </p><p>
+                Define un porcentaje de descuento que se aplicará automáticamente
+                en las facturas al validar, según el tipo de cliente.
+            </p>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,16 @@
+<odoo>
+    <!-- Menú Principal: Ajustes de Contabilidad -->
+    <menuitem id="binaural_accounting_menu_root"
+        name="Ajustes de Descuento"
+        parent="account.menu_finance_configuration"
+        sequence="50"
+        groups="base.group_system"/>
+
+    <!-- Submenú: Reglas de Descuento -->
+    <menuitem id="binaural_discount_rule_menu"
+        name="Reglas de Descuento"
+        parent="binaural_accounting_menu_root"
+        action="binaural_discount_rule_action"
+        sequence="10"
+        groups="base.group_system,account.group_account_user"/>
+</odoo>

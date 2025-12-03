@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_binaural_discount_rule_admin,binaural.discount.rule.admin,model_binaural_discount_rule,base.group_system,1,1,1,1
+access_binaural_discount_rule_user,binaural.discount.rule.user,model_binaural_discount_rule,account.group_account_user,1,0,0,0

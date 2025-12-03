@@ -1,0 +1,18 @@
+<odoo>
+    <!-- Extensión del formulario de Contactos (res.partner) -->
+    <record id="view_partner_property_form_discount_type" model="ir.ui.view">
+        <field name="name">res.partner.form.discount.type</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <!-- Añadir el campo 'Tipo de Cliente' en la pestaña de Ventas y Compras -->
+            <xpath expr="//field[@name='property_supplier_payment_term_id']" position="after">
+                <field name="customer_type" invisible="not is_company"/>
+            </xpath>
+            <!-- Asegurar que el campo se muestre solo en clientes -->
+            <xpath expr="//field[@name='customer_type']" position="attributes">
+                <attribute name="invisible">False</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
