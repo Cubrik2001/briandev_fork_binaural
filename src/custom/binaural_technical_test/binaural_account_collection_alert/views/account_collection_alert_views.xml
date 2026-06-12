@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_collection_alert_tree" model="ir.ui.view">
+        <field name="name">account.collection.alert.tree</field>
+        <field name="model">account.collection.alert</field>
+        <field name="arch" type="xml">
+            <tree string="Alertas de cobro">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="risk_level" widget="badge"
+                       decoration-danger="risk_level == 'high'"
+                       decoration-warning="risk_level == 'medium'"
+                       decoration-info="risk_level == 'low'"/>
+                <field name="days_overdue"/>
+                <field name="amount_residual"/>
+                <field name="invoice_date_due"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_account_collection_alert_form" model="ir.ui.view">
+        <field name="name">account.collection.alert.form</field>
+        <field name="model">account.collection.alert</field>
+        <field name="arch" type="xml">
+            <form string="Alerta de cobro">
+                <sheet>
+                    <group>
+                        <field name="move_id"/>
+                        <field name="partner_id"/>
+                        <field name="risk_level"/>
+                        <field name="rule_id"/>
+                    </group>
+                    <group>
+                        <field name="days_overdue"/>
+                        <field name="amount_residual"/>
+                        <field name="invoice_date_due"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_account_collection_alert_kanban" model="ir.ui.view">
+        <field name="name">account.collection.alert.kanban</field>
+        <field name="model">account.collection.alert</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="risk_level" class="o_kanban_small_column">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="risk_level"/>
+                <field name="days_overdue"/>
+                <field name="amount_residual"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <strong><field name="name"/></strong>
+                            <div><field name="partner_id"/></div>
+                            <div>
+                                Atraso: <field name="days_overdue"/> días |
+                                Pendiente: <field name="amount_residual"/>
+                            </div>
+                            <field name="risk_level" widget="label_selection"
+                                   options="{'classes': {'low': 'info', 'medium': 'warning', 'high': 'danger'}}"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_account_collection_alert" model="ir.actions.act_window">
+        <field name="name">Alertas de cobro</field>
+        <field name="res_model">account.collection.alert</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{'search_default_group_risk_level': 1}</field>
+    </record>
+
+    <menuitem id="menu_account_collection_alert"
+              name="Alertas de cobro"
+              parent="account.menu_finance_receivables"
+              action="action_account_collection_alert"
+              sequence="25"/>
+</odoo>

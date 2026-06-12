@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mail_activity_type_replenishment" model="mail.activity.type">
+        <field name="name">Reabastecimiento pendiente</field>
+        <field name="icon">fa-cubes</field>
+        <field name="res_model">product.template</field>
+        <field name="delay_count">1</field>
+        <field name="sequence">20</field>
+    </record>
+</odoo>

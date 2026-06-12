@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_stock_operation_tag_tree" model="ir.ui.view">
+        <field name="name">stock.operation.tag.tree</field>
+        <field name="model">stock.operation.tag</field>
+        <field name="arch" type="xml">
+            <tree string="Etiquetas operativas">
+                <field name="name"/>
+                <field name="operation_type"/>
+                <field name="color" widget="color"/>
+                <field name="product_count"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_stock_operation_tag_form" model="ir.ui.view">
+        <field name="name">stock.operation.tag.form</field>
+        <field name="model">stock.operation.tag</field>
+        <field name="arch" type="xml">
+            <form string="Etiqueta operativa">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="operation_type"/>
+                        <field name="color" widget="color"/>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                    <group>
+                        <field name="product_ids" widget="many2many_tags"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_stock_operation_tag_kanban" model="ir.ui.view">
+        <field name="name">stock.operation.tag.kanban</field>
+        <field name="model">stock.operation.tag</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="operation_type" class="o_kanban_small_column">
+                <field name="name"/>
+                <field name="operation_type"/>
+                <field name="color"/>
+                <field name="product_count"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <strong><field name="name"/></strong>
+                            <div><field name="operation_type"/></div>
+                            <div>Productos: <field name="product_count"/></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_stock_operation_tag" model="ir.actions.act_window">
+        <field name="name">Etiquetas operativas</field>
+        <field name="res_model">stock.operation.tag</field>
+        <field name="view_mode">tree,kanban,form</field>
+    </record>
+
+    <menuitem id="menu_stock_operation_tag"
+              name="Etiquetas operativas"
+              parent="stock.menu_product_in_config_stock"
+              action="action_stock_operation_tag"
+              sequence="50"/>
+</odoo>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_collection_alert_rule_tree" model="ir.ui.view">
+        <field name="name">account.collection.alert.rule.tree</field>
+        <field name="model">account.collection.alert.rule</field>
+        <field name="arch" type="xml">
+            <tree string="Reglas de alerta de cobro">
+                <field name="name"/>
+                <field name="days_overdue"/>
+                <field name="amount_min"/>
+                <field name="risk_level"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_account_collection_alert_rule_form" model="ir.ui.view">
+        <field name="name">account.collection.alert.rule.form</field>
+        <field name="model">account.collection.alert.rule</field>
+        <field name="arch" type="xml">
+            <form string="Regla de alerta de cobro">
+                <header>
+                    <button name="action_recompute_alerts" type="object"
+                            string="Recalcular alertas" class="btn-primary"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="active"/>
+                    </group>
+                    <group>
+                        <field name="days_overdue"/>
+                        <field name="amount_min"/>
+                        <field name="risk_level"/>
+                        <field name="currency_id" invisible="1"/>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_account_collection_alert_rule" model="ir.actions.act_window">
+        <field name="name">Reglas de alerta de cobro</field>
+        <field name="res_model">account.collection.alert.rule</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_account_collection_alert_rule"
+              name="Reglas de alerta de cobro"
+              parent="account.menu_finance_configuration"
+              action="action_account_collection_alert_rule"
+              sequence="90"/>
+</odoo>

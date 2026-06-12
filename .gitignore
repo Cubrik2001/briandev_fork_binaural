@@ -1,5 +1,5 @@
 .env
-src
+.env_example
 .resources/Dockerfile
 .resources/dbconfigs/pg_hba.conf
 **/.vscode/
@@ -9,4 +9,4 @@ venv
 backups
 .DS_Store
 __pycache__
-
+.cursor/

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="demo_product_replenishment_low" model="product.template">
+        <field name="name">Demo Reabastecimiento Baja Prioridad</field>
+        <field name="type">product</field>
+        <field name="replenish_priority">low</field>
+        <field name="replenishment_target_qty">50</field>
+        <field name="list_price">25.0</field>
+    </record>
+
+    <record id="demo_product_replenishment_high" model="product.template">
+        <field name="name">Demo Reabastecimiento Alta Prioridad</field>
+        <field name="type">product</field>
+        <field name="replenish_priority">high</field>
+        <field name="replenishment_target_qty">100</field>
+        <field name="list_price">75.0</field>
+    </record>
+</odoo>

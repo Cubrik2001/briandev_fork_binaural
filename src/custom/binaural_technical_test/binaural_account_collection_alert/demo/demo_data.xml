@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="demo_rule_low" model="account.collection.alert.rule">
+        <field name="name">Demo Riesgo Bajo</field>
+        <field name="days_overdue">7</field>
+        <field name="amount_min">100</field>
+        <field name="risk_level">low</field>
+    </record>
+
+    <record id="demo_rule_medium" model="account.collection.alert.rule">
+        <field name="name">Demo Riesgo Medio</field>
+        <field name="days_overdue">30</field>
+        <field name="amount_min">500</field>
+        <field name="risk_level">medium</field>
+    </record>
+
+    <record id="demo_rule_high" model="account.collection.alert.rule">
+        <field name="name">Demo Riesgo Alto</field>
+        <field name="days_overdue">60</field>
+        <field name="amount_min">1000</field>
+        <field name="risk_level">high</field>
+    </record>
+</odoo>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_product_template_form_operation_tags" model="ir.ui.view">
+        <field name="name">product.template.form.operation.tags</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='inventory']" position="inside">
+                <group string="Etiquetas operativas">
+                    <field name="operation_tag_ids" widget="many2many_tags"
+                           options="{'color_field': 'color'}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_product_template_operation_kanban" model="ir.ui.view">
+        <field name="name">product.template.operation.kanban</field>
+        <field name="model">product.template</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="operation_tag_ids" class="o_kanban_small_column">
+                <field name="name"/>
+                <field name="operation_tag_ids"/>
+                <field name="default_code"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <strong><field name="name"/></strong>
+                            <div t-if="record.default_code.value">
+                                [<field name="default_code"/>]
+                            </div>
+                            <field name="operation_tag_ids" widget="many2many_tags"
+                                   options="{'color_field': 'color'}"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_product_by_operation_tag" model="ir.actions.act_window">
+        <field name="name">Productos por etiqueta operativa</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[('operation_tag_ids', '!=', False)]</field>
+        <field name="context">{'search_default_group_operation_tag_ids': 1}</field>
+        <field name="view_ids" eval="[
+            (5, 0, 0),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('view_product_template_operation_kanban')}),
+        ]"/>
+    </record>
+
+    <record id="action_assign_operation_tags" model="ir.actions.act_window">
+        <field name="name">Asignar etiquetas operativas</field>
+        <field name="res_model">stock.operation.tag.assign.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="product.model_product_template"/>
+        <field name="binding_view_types">list,kanban</field>
+    </record>
+
+    <menuitem id="menu_product_by_operation_tag"
+              name="Productos por etiqueta operativa"
+              parent="stock.menu_stock_inventory_control"
+              action="action_product_by_operation_tag"
+              sequence="30"/>
+</odoo>

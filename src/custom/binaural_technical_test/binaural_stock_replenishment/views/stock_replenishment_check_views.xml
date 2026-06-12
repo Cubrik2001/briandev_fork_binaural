@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_product_template_pending_replenishment_tree" model="ir.ui.view">
+        <field name="name">product.template.pending.replenishment.tree</field>
+        <field name="model">product.template</field>
+        <field name="arch" type="xml">
+            <tree string="Reabastecimiento pendiente" default_order="replenish_priority desc">
+                <field name="name"/>
+                <field name="replenish_priority" widget="badge"
+                       decoration-danger="replenish_priority == 'high'"
+                       decoration-warning="replenish_priority == 'medium'"
+                       decoration-info="replenish_priority == 'low'"/>
+                <field name="qty_available"/>
+                <field name="replenishment_target_qty"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_product_template_pending_replenishment_kanban" model="ir.ui.view">
+        <field name="name">product.template.pending.replenishment.kanban</field>
+        <field name="model">product.template</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="replenish_priority" class="o_kanban_small_column">
+                <field name="name"/>
+                <field name="replenish_priority"/>
+                <field name="qty_available"/>
+                <field name="replenishment_target_qty"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <strong><field name="name"/></strong>
+                            <div>
+                                Stock: <field name="qty_available"/> /
+                                Objetivo: <field name="replenishment_target_qty"/>
+                            </div>
+                            <field name="replenish_priority" widget="label_selection"
+                                   options="{'classes': {'low': 'info', 'medium': 'warning', 'high': 'danger'}}"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_pending_replenishment_products" model="ir.actions.act_window">
+        <field name="name">Reabastecimiento pendiente</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="domain">[('needs_replenishment', '=', True)]</field>
+        <field name="context">{'search_default_group_replenish_priority': 1}</field>
+        <field name="view_ids" eval="[
+            (5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('view_product_template_pending_replenishment_tree')}),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('view_product_template_pending_replenishment_kanban')}),
+        ]"/>
+    </record>
+
+    <record id="action_run_replenishment_check" model="ir.actions.server">
+        <field name="name">Verificar reabastecimiento</field>
+        <field name="model_id" ref="model_stock_replenishment_check"/>
+        <field name="state">code</field>
+        <field name="code">model.run_replenishment_check()</field>
+    </record>
+
+    <menuitem id="menu_pending_replenishment"
+              name="Reabastecimiento pendiente"
+              parent="stock.menu_stock_warehouse_mgmt"
+              action="action_pending_replenishment_products"
+              sequence="25"/>
+
+    <menuitem id="menu_run_replenishment_check"
+              name="Verificar reabastecimiento"
+              parent="stock.menu_stock_warehouse_mgmt"
+              action="action_run_replenishment_check"
+              sequence="26"/>
+</odoo>
